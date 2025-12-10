@@ -217,6 +217,29 @@ textarea {
     resize: vertical;
 }
 
+.phone-box {
+    display: flex;
+    gap: 10px;
+}
+
+.phone-box select {
+    width: 100px;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1.4px solid #cbd5e1;
+    font-size: 15px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.phone-box select:focus {
+    border-color: #0b2f6b;
+}
+
+.phone-box input {
+    flex: 1;
+}
+
 .submit-btn {
     grid-column: 1 / -1;
     justify-self: center;
@@ -345,4 +368,41 @@ textarea {
     .validity-box {
         width: 100%;
     }
+}
+
+.input-error {
+    border: 2px solid #ff3b3b !important;
+    background: #ffecec !important;
+    animation: shake 0.25s linear 2;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+}
+
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    min-width: 240px;
+    background: #ff4e4e;
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.4s ease;
+    z-index: 9999;
+    box-shadow: 0px 5px 18px rgba(0,0,0,0.2);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
 }

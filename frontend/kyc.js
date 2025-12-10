@@ -15,6 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
     loadFormData();
     attachLiveListeners();
     showSection("kyc");
+    
 });
 
 function goToStep(step) {
@@ -23,17 +24,41 @@ function goToStep(step) {
 
 function nextStep(step) {
     const current = getCurrentStep();
-    if (!isSectionFilled(current)) {
-        alert("Please fill all required fields before continuing.");
-        focusFirstEmpty(current);
+    const missing = isSectionFilled(current);
+
+    if (missing !== true) {
+        const el = document.getElementById(missing);
+        const label = document.querySelector(`label[for="${missing}"]`)?.innerText || missing;
+
+        showToast(`⚠ Please fill: ${label}`);
+
+        el.classList.add("input-error");
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        setTimeout(() => el.classList.remove("input-error"), 5000);
+        el.focus();
         return;
     }
-    if (!completedSteps.includes(current)) {
-        completedSteps.push(current);
+
+    if(current === "kyc"){
+        let mobile = document.getElementById("mobile").value.replace(/\s/g,""); // remove spaces
+
+        if(mobile.length !== 10){
+            showToast("⚠ Enter valid 10-digit mobile number");
+            let el = document.getElementById("mobile");
+            el.classList.add("input-error");
+            el.scrollIntoView({behavior:"smooth",block:"center"});
+            setTimeout(()=> el.classList.remove("input-error"),5000);
+            return;
+        }
     }
+
+
+    if (!completedSteps.includes(current)) completedSteps.push(current);
     saveFormData();
     showSection(step);
 }
+
+
 
 function getCurrentStep() {
     return STEPS.find(step => isVisible("section-" + step));
@@ -66,20 +91,19 @@ function showSection(step) {
 
 function isSectionFilled(step) {
     const fields = REQUIRED[step];
-    if (fields.length === 0) return false;
 
     for (const id of fields) {
         const el = document.getElementById(id);
-        if (!el) return false;
 
-        if (el.type === "file") {
-            if (!el.files || el.files.length === 0) return false;
-        } else {
-            if (el.value.trim() === "") return false;
-        }
+        if (!el) return id;
+
+        if (el.type === "file" && (!el.files || el.files.length === 0)) return id;
+        if (el.type !== "file" && el.value.trim() === "") return id;
     }
+
     return true;
 }
+
 
 function focusFirstEmpty(step) {
     const fields = REQUIRED[step];
@@ -154,6 +178,13 @@ function attachLiveListeners() {
     });
 
     document.getElementById("dob").addEventListener("change", calculateAge);
+
+    document.getElementById("mobile").addEventListener("input", function(){
+        let v = this.value.replace(/\D/g,"").substring(0,10);
+        if(v.length > 5) v = v.substring(0,5) + " " + v.substring(5);
+        this.value = v;
+    });
+
 }
 
 function calculateAge() {
@@ -309,4 +340,14 @@ function loadReviewPage() {
 function finishKYC() {
     alert("KYC Completed Successfully! 🎉");
     window.location.href = "index.html";
+}
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 5800);
 }
