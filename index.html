@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HDFC Bank - Update KYC</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- Top Blue Navbar -->
+    <header class="top-bar">
+        <div class="container-nav">
+            <img src="logo.png" class="logo" />
+            <div class="nav-right">
+                <span class="nav-item">Locate us</span>
+                <span class="nav-item">Help</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Banner -->
+    <section class="banner">
+        <div class="banner-left">
+            <h1>Digital KYC</h1>
+            <p>Review and update your KYC details easily.</p>
+        </div>
+
+        <!-- Right Panel (Girl removed but layout same) -->
+        <div class="banner-right"></div>
+    </section>
+
+    <!-- KYC Requirements Box -->
+    <section class="kyc-box-wrapper">
+        <div class="kyc-box">
+            <h2>If 'Yes' is your answer to the below points, then Let's Begin</h2>
+
+            <ul>
+                <li>🧑‍🦳 I am above 18 years of age</li>
+                <!-- <li>💳 I have an active Savings/Salary account AND/OR Credit Card AND/OR Loan with HDFC Bank</li> -->
+                <li>🪪 I have my Address proof handy with me to complete KYC. (Aadhaar Number/Passport/Voter ID)</li>
+                <li>💼 I have my proof of Identity details handy with me for identity verification. (PAN card/Aadhar card/Passport)</li>
+                <li>📱 I have my registered mobile number handy for OTP verification</li>
+                <li>🎥 I can choose to activate my singly held dormant account(s) via Video KYC, if any, during this process.</li>
+            </ul>
+        </div>
+
+        <button class="begin-btn">Let's Begin</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">© Copyright HDFC Bank Ltd.</div>
+        <div class="footer-right">Contact Support</div>
+    </footer>
+
+    <script>
+        document.querySelector(".begin-btn").addEventListener("click", function () {
+            window.location.href = "kyc.html";
+        });
+    </script>
+
+</body>
+</html>

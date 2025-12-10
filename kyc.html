@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC Portal | HDFC Bank</title>
+    <link rel="stylesheet" href="s1.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="brand">
+            <img src="logo.png" class="hdfc-logo" alt="HDFC Bank Logo">
+        </div>
+
+        <ul class="menu">
+            <li id="nav-kyc" class="active"><a onclick="goToStep('kyc')"><span>📄</span> KYC Form</a></li>
+            <li id="nav-docs"><a onclick="goToStep('docs')"><span>📤</span> Document Upload</a></li>
+            <li id="nav-verify"><a onclick="goToStep('verify')"><span>🔐</span> Identity Verification</a></li>
+            <li id="nav-status"><a onclick="goToStep('status')"><span>📊</span> Application Status</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-area">
+
+        <!-- STEP PROGRESS BAR -->
+        <div class="stepper">
+            <div class="step" id="step-1"><span class="tick">&#10003;</span> 1. KYC Form</div>
+            <div class="step" id="step-2"><span class="tick">&#10003;</span> 2. Document Upload</div>
+            <div class="step" id="step-3"><span class="tick">&#10003;</span> 3. Verification</div>
+            <div class="step" id="step-4"><span class="tick">&#10003;</span> 4. Completed</div>
+
+            <div class="progress-line" id="progress-line"></div>
+        </div>
+
+
+        <!-- HEADER -->
+        <header class="header">
+            <h2 id="page-title">Customer KYC Update</h2>
+            <p id="page-desc">Please fill in the details below to continue your verification process.</p>
+        </header>
+
+        <!-- SECTION 1: KYC FORM -->
+        <section id="section-kyc" class="form-card animate">
+            <h3 class="section-heading">Personal Information</h3>
+
+            <form class="grid-form" id="kyc-form">
+
+                <!-- FIRST NAME -->
+                <div class="field">
+                    <label>First Name</label>
+                    <input id="firstName" type="text" placeholder="Enter first name">
+                </div>
+
+                <!-- MIDDLE NAME -->
+                <div class="field">
+                    <label>Middle Name</label>
+                    <input id="middleName" type="text" placeholder="Enter middle name">
+                </div>
+
+                <!-- LAST NAME -->
+                <div class="field">
+                    <label>Last Name</label>
+                    <input id="lastName" type="text" placeholder="Enter last name">
+                </div>
+
+                <!-- FATHER'S NAME -->
+                <div class="field full1">
+                    <label>Father's Name</label>
+                    <input id="fatherName" type="text" placeholder="Enter father's name">
+                </div>
+
+                <!-- DOB -->
+                <div class="field">
+                    <label>Date of Birth</label>
+                    <input id="dob" type="date">
+                </div>
+
+                <!-- AGE -->
+                <div class="field">
+                    <label>Age</label>
+                    <input id="age" type="number" min="0" placeholder="Age" readonly>
+                </div>
+
+                <!-- GENDER -->
+                <div class="field full">
+                    <label>Gender</label>
+                    <select id="gender">
+                        <option value="">Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- MOBILE -->
+                <div class="field">
+                    <label>Mobile Number</label>
+                    <input id="mobile" type="text" placeholder="+91">
+                </div>
+
+                <!-- EMAIL -->
+                <div class="field">
+                    <label>Email Address</label>
+                    <input id="email" type="email" placeholder="example@domain.com">
+                </div>
+
+                <!-- ADDRESS -->
+                <div class="field full">
+                    <label>Residential Address</label>
+                    <textarea id="address" placeholder="Enter your address"></textarea>
+                </div>
+
+
+                <button type="button" class="submit-btn" onclick="nextStep('docs')">
+                    Save & Continue
+                </button>
+
+            </form>
+        </section>
+
+        <!-- SECTION 2: DOCUMENT UPLOAD -->
+        <section id="section-docs" class="form-card animate" style="display:none;">
+            <h3 class="section-heading">Document Upload</h3>
+
+            <!-- ADDRESS PROOF -->
+            <div class="upload-block">
+
+                <div class="field">
+                    <label>Address Proof Type</label>
+                    <select id="addressProofType">
+                        <option value="">Select Document</option>
+                        <option value="aadhar">Aadhar Card</option>
+                        <option value="passport">Passport</option>
+                        <option value="voterid">Voter ID</option>
+                    </select>
+                </div>
+
+                <div class="upload-row">
+
+                    <div class="validity-box">
+                        <h4>Validity Score</h4>
+                        <p>Clarity: <span class="dummy">92%</span></p>
+                        <p>Duplicate: <span class="dummy">No</span></p>
+                    </div>
+
+                    <div class="upload-box">
+                        <label>Upload Address Proof</label>
+                        <input id="addressFile" type="file" disabled accept="image/*" onchange="previewImage(this, 'addressPreview')">
+                        <img id="addressPreview" class="preview-img">
+                    </div>
+
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- IDENTITY PROOF -->
+            <div class="upload-block">
+
+                <div class="field">
+                    <label>Identity Proof Type</label>
+                    <select id="identityProofType">
+                        <option value="">Select Document</option>
+                        <option value="aadhar">Aadhar Card</option>
+                        <option value="pan">PAN Card</option>
+                        <option value="passport">Passport</option>
+                    </select>
+                </div>
+
+                <div class="upload-row">
+
+                    <div class="validity-box">
+                        <h4>Validity Score</h4>
+                        <p>Clarity: <span class="dummy">89%</span></p>
+                        <p>Duplicate: <span class="dummy">No</span></p>
+                    </div>
+
+                    <div class="upload-box">
+                        <label>Upload Identity Proof</label>
+                        <input id="aadhaarFile" type="file" disabled accept="image/*" onchange="previewImage(this, 'identityPreview')">
+                        <img id="identityPreview" class="preview-img">
+                    </div>
+
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- PASSPORT SIZE PHOTO + LIVE CAMERA MATCH -->
+            <div class="upload-block">
+
+                <div class="upload-row">
+
+                    <div class="upload-box">
+                        <label>Passport Size Photo</label>
+                        <input id="photoFile" type="file" accept="image/*" onchange="handlePassportUpload(this)">
+                        <img id="passportPreview" class="preview-img">
+                    </div>
+
+                    <div class="validity-box" style="max-width:240px;">
+                        <h4>Live Capture</h4>
+
+                        <video id="liveCam" style="display:none;"></video>
+
+                        <button id="captureBtn" style="display:none;" class="cam-btn" onclick="captureLivePhoto()">
+                            Capture Photo
+                        </button>
+
+                        <img id="livePreview" class="preview-img" style="display:none; margin-top:10px;">
+
+                        <p style="margin-top:10px;">Match Score: <span class="dummy">98%</span></p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button type="button" class="submit-btn" onclick="nextStep('verify')">Continue</button>
+        </section>
+
+        <!-- SECTION 3: VERIFICATION -->
+        <section id="section-verify" class="form-card animate" style="display:none;">
+            <h3 class="section-heading">Identity Verification</h3>
+            <p>Verification step placeholder.</p>
+
+            <button type="button" class="submit-btn" onclick="nextStep('status')">Finish Verification</button>
+        </section>
+
+        <!-- SECTION 4: STATUS -->
+        <section id="section-status" class="form-card animate" style="display:none;">
+            <h2>KYC Completed 🎉</h2>
+            <p>Your details have been successfully submitted.</p>
+        </section>
+
+    </main>
+
+    <script src="kyc.js"></script>
+
+</body>
+</html>
