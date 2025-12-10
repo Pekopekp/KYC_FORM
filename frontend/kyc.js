@@ -52,6 +52,17 @@ function nextStep(step) {
         }
     }
 
+    const email = document.getElementById("email").value.trim();
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if(!emailPattern.test(email)){
+        showToast("⚠ Enter a valid email address");
+        let el = document.getElementById("email");
+        el.classList.add("input-error");
+        el.scrollIntoView({behavior:"smooth",block:"center"});
+        setTimeout(()=> el.classList.remove("input-error"),2000);
+        return;
+    }
 
     if (!completedSteps.includes(current)) completedSteps.push(current);
     saveFormData();
