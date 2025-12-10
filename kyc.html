@@ -30,7 +30,7 @@
             <div class="step" id="step-1"><span class="tick">&#10003;</span> 1. KYC Form</div>
             <div class="step" id="step-2"><span class="tick">&#10003;</span> 2. Document Upload</div>
             <div class="step" id="step-3"><span class="tick">&#10003;</span> 3. Verification</div>
-            <div class="step" id="step-4"><span class="tick">&#10003;</span> 4. Completed</div>
+            <div class="step" id="step-4"><span class="tick">&#10003;</span> 4. Review</div>
 
             <div class="progress-line" id="progress-line"></div>
         </div>
@@ -224,16 +224,144 @@
         <!-- SECTION 3: VERIFICATION -->
         <section id="section-verify" class="form-card animate" style="display:none;">
             <h3 class="section-heading">Identity Verification</h3>
-            <p>Verification step placeholder.</p>
 
-            <button type="button" class="submit-btn" onclick="nextStep('status')">Finish Verification</button>
+            <!-- SIGNATURE UPLOAD -->
+            <div class="upload-block">
+                <h4>Upload Your Signature</h4>
+
+                <div class="upload-row">
+                    <div class="validity-box">
+                        <h4>Verification Score</h4>
+                        <p>Clarity: <span class="dummy">90%</span></p>
+                        <p>Forgery Check: <span class="dummy">Passed</span></p>
+                    </div>
+
+                    <div class="upload-box">
+                        <label>Upload Signature Image</label>
+                        <input id="signFile" type="file" accept="image/*" onchange="previewImage(this, 'signPreview')">
+                        <img id="signPreview" class="preview-img">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- OTP VERIFICATION -->
+            <div class="upload-block">
+                <h4>Choose OTP Verification Method</h4>
+
+                <div class="field full">
+                    <label>Select Verification Method</label>
+                    <select id="otpMethod" onchange="showOtpFields()">
+                        <option value="">Select method</option>
+                        <option value="mobile">Verify via Mobile</option>
+                        <option value="email">Verify via Email</option>
+                    </select>
+                </div>
+
+                <!-- MOBILE INPUT -->
+                <div class="field full" id="mobileInput" style="display:none;">
+                    <label>Enter Mobile Number</label>
+                    <input id="otpMobile" type="text" placeholder="+91">
+                </div>
+
+                <!-- EMAIL INPUT -->
+                <div class="field full" id="emailInput" style="display:none;">
+                    <label>Enter Email Address</label>
+                    <input id="otpEmail" type="email" placeholder="example@domain.com">
+                </div>
+
+                <button type="button" class="submit-btn" id="sendOtpBtn" style="display:none;" onclick="sendOTP()">
+                    Send OTP
+                </button>
+
+                <!-- OTP BOX -->
+                <div class="field full" id="otpBox" style="display:none; margin-top:15px;">
+                    <label>Enter OTP</label>
+                    <input id="otpValue" type="text" placeholder="Enter OTP">
+                </div>
+
+                <!-- CAPTCHA TEXT CHECK -->
+                <div class="field full" id="captchaBox" style="display:none; margin-top:15px;">
+                    <label>Type the text shown below:</label>
+                    <div style="padding:12px; background:#eef3ff; border-radius:8px; width:160px; text-align:center; font-weight:700; margin-bottom:10px;"
+                        id="captchaText"></div>
+
+                    <input id="captchaInput" type="text" placeholder="Enter text">
+                </div>
+
+            </div>
+
+            <button type="button" class="submit-btn" onclick="completeVerify()">
+                Save & Continue
+            </button>
         </section>
+
 
         <!-- SECTION 4: STATUS -->
         <section id="section-status" class="form-card animate" style="display:none;">
-            <h2>KYC Completed 🎉</h2>
-            <p>Your details have been successfully submitted.</p>
+            <h3 class="section-heading">Final Review Before Submission</h3>
+
+            <!-- PERSONAL DETAILS -->
+            <div class="upload-block">
+                <h4>Personal Information</h4>
+
+                <div class="grid-form">
+                    <div class="field"><label>First Name</label><p id="rev-first"></p></div>
+                    <div class="field"><label>Middle Name</label><p id="rev-middle"></p></div>
+                    <div class="field"><label>Last Name</label><p id="rev-last"></p></div>
+
+                    <div class="field full"><label>Father's Name</label><p id="rev-father"></p></div>
+
+                    <div class="field"><label>DOB</label><p id="rev-dob"></p></div>
+                    <div class="field"><label>Age</label><p id="rev-age"></p></div>
+
+                    <div class="field full"><label>Gender</label><p id="rev-gender"></p></div>
+
+                    <div class="field"><label>Mobile</label><p id="rev-mobile"></p></div>
+                    <div class="field"><label>Email</label><p id="rev-email"></p></div>
+
+                    <div class="field full"><label>Address</label><p id="rev-address"></p></div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- DOCUMENT PREVIEW -->
+            <div class="upload-block">
+                <h4>Uploaded Documents</h4>
+
+                <div class="upload-row">
+                    <div class="upload-box">
+                        <label>Address Proof</label>
+                        <img id="rev-addressProof" class="preview-img">
+                    </div>
+
+                    <div class="upload-box">
+                        <label>Identity Proof</label>
+                        <img id="rev-identityProof" class="preview-img">
+                    </div>
+                </div>
+
+                <div class="upload-row" style="margin-top:20px;">
+                    <div class="upload-box">
+                        <label>Passport Photo</label>
+                        <img id="rev-passport" class="preview-img">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- SIGNATURE -->
+            <div class="upload-block">
+                <h4>Signature</h4>
+                <img id="rev-sign" class="preview-img" style="max-width:260px;">
+            </div>
+
+            <button class="submit-btn" onclick="finishKYC()">Submit KYC</button>
         </section>
+
 
     </main>
 

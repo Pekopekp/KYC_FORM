@@ -22,7 +22,7 @@ const REQUIRED = {
     "address"
     ],
     docs: ["aadhaarFile", "addressFile", "photoFile"], // file inputs
-    verify: [],  // add fields if needed
+    verify: ["signFile", "otpMethod"],  
     status: []
 };
 
@@ -253,10 +253,19 @@ function previewImage(input, targetId) {
 
     if (file) {
         const reader = new FileReader();
-        reader.onload = () => preview.src = reader.result;
+        reader.onload = () => {
+            preview.src = reader.result;
+
+            // store globally for final summary
+            if (targetId === "addressPreview") window.preview_address = reader.result;
+            if (targetId === "identityPreview") window.preview_identity = reader.result;
+            if (targetId === "passportPreview") window.preview_passport = reader.result;
+            if (targetId === "signPreview") window.preview_signature = reader.result;
+        };
         reader.readAsDataURL(file);
     }
 }
+
 
 
 function handlePassportUpload(input) {
@@ -327,3 +336,108 @@ document.getElementById("identityProofType").addEventListener("change", function
     const upload = document.getElementById("aadhaarFile");
     upload.disabled = (this.value === "");
 });
+
+/* =====================================================
+   OTP SELECTION LOGIC
+===================================================== */
+
+function showOtpFields() {
+    const method = document.getElementById("otpMethod").value;
+
+    document.getElementById("mobileInput").style.display = (method === "mobile") ? "block" : "none";
+    document.getElementById("emailInput").style.display = (method === "email") ? "block" : "none";
+
+    document.getElementById("sendOtpBtn").style.display = (method !== "") ? "block" : "none";
+}
+
+/* SEND OTP SIMULATION */
+function sendOTP() {
+    alert("OTP sent successfully!");
+
+    document.getElementById("otpBox").style.display = "block";
+    document.getElementById("captchaBox").style.display = "block";
+
+    generateCaptcha();
+}
+
+/* CAPTCHA GENERATOR */
+function generateCaptcha() {
+    const text = Math.random().toString(36).substring(2, 8).toUpperCase();
+    document.getElementById("captchaText").innerText = text;
+    document.getElementById("captchaText").setAttribute("data-real", text);
+}
+
+/* VERIFY ENTERED DATA */
+function completeVerify() {
+    const otp = document.getElementById("otpValue").value.trim();
+    const captcha = document.getElementById("captchaInput").value.trim();
+    const realCaptcha = document.getElementById("captchaText").getAttribute("data-real");
+
+    if (otp === "") {
+        alert("Please enter OTP.");
+        return;
+    }
+
+    if (captcha === "") {
+        alert("Please enter captcha text.");
+        return;
+    }
+
+    if (captcha !== realCaptcha) {
+        alert("Incorrect captcha. Try again.");
+        generateCaptcha();
+        return;
+    }
+
+    // If passed → mark step complete
+    completedSteps.push("verify");
+    showSection("status");
+    loadReviewPage();
+}
+
+/* =====================================================
+   FINAL REVIEW PAGE — LOAD ALL DATA + IMAGES
+===================================================== */
+function loadReviewPage() {
+
+    // Text fields from session storage
+    const saved = JSON.parse(sessionStorage.getItem("kycData") || "{}");
+
+    document.getElementById("rev-first").innerText = saved.firstName || "";
+    document.getElementById("rev-middle").innerText = saved.middleName || "";
+    document.getElementById("rev-last").innerText = saved.lastName || "";
+
+    document.getElementById("rev-father").innerText = saved.fatherName || "";
+    document.getElementById("rev-dob").innerText = saved.dob || "";
+    document.getElementById("rev-age").innerText = saved.age || "";
+    document.getElementById("rev-gender").innerText = saved.gender || "";
+
+    document.getElementById("rev-mobile").innerText = saved.mobile || "";
+    document.getElementById("rev-email").innerText = saved.email || "";
+    document.getElementById("rev-address").innerText = saved.address || "";
+
+    // Load preview images stored globally
+    document.getElementById("rev-addressProof").src =
+        window.preview_address || "";
+
+    document.getElementById("rev-identityProof").src =
+        window.preview_identity || "";
+
+    document.getElementById("rev-passport").src =
+        window.preview_passport || "";
+
+    document.getElementById("rev-sign").src =
+        window.preview_signature || "";
+}
+
+/* =====================================================
+   FINAL SUBMISSION — SHOW MESSAGE + REDIRECT
+===================================================== */
+function finishKYC() {
+
+    // Show success message
+    alert("KYC Completed Successfully! 🎉");
+
+    // Redirect to home page
+    window.location.href = "index.html";
+}
