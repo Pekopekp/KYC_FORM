@@ -196,6 +196,13 @@ function attachLiveListeners() {
         this.value = v;
     });
 
+    const otpMobileInput = document.getElementById("otpMobile");
+    if (otpMobileInput) {
+        otpMobileInput.addEventListener("input", function(){
+            this.value = this.value.replace(/\D/g,"").substring(0,10);
+        });
+    }
+
 }
 
 function calculateAge() {
@@ -295,11 +302,46 @@ function showOtpFields() {
 }
 
 function sendOTP() {
-    alert("OTP sent successfully!");
+    const method = document.getElementById("otpMethod").value;
+
+    if (!method) {
+        showToast("⚠ Please select a verification method");
+        return;
+    }
+
+    if (method === "mobile") {
+        let mobile = document.getElementById("otpMobile").value.replace(/\s/g, "");
+
+        if (mobile.length !== 10) {
+            showToast("⚠ Enter a valid 10-digit mobile number for verification");
+            let el = document.getElementById("otpMobile");
+            el.classList.add("input-error");
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+            setTimeout(() => el.classList.remove("input-error"), 2000);
+            return;
+        }
+    }
+
+    if (method === "email") {
+        const email = document.getElementById("otpEmail").value.trim();
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailPattern.test(email)) {
+            showToast("⚠ Enter a valid email address for verification");
+            let el = document.getElementById("otpEmail");
+            el.classList.add("input-error");
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+            setTimeout(() => el.classList.remove("input-error"), 2000);
+            return;
+        }
+    }
+
+    showToast("✅ OTP sent successfully!");
     document.getElementById("otpBox").style.display = "block";
     document.getElementById("captchaBox").style.display = "block";
     generateCaptcha();
 }
+
 
 function generateCaptcha() {
     const text = Math.random().toString(36).substring(2, 8).toUpperCase();
