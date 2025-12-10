@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- Sidebar Navigation -->
     <aside class="sidebar">
         <div class="brand">
             <img src="logo.png" class="hdfc-logo" alt="HDFC Bank Logo">
@@ -22,69 +21,56 @@
         </ul>
     </aside>
 
-    <!-- Main Content -->
     <main class="main-area">
 
-        <!-- STEP PROGRESS BAR -->
         <div class="stepper">
             <div class="step" id="step-1"><span class="tick">&#10003;</span> 1. KYC Form</div>
             <div class="step" id="step-2"><span class="tick">&#10003;</span> 2. Document Upload</div>
             <div class="step" id="step-3"><span class="tick">&#10003;</span> 3. Verification</div>
             <div class="step" id="step-4"><span class="tick">&#10003;</span> 4. Review</div>
-
             <div class="progress-line" id="progress-line"></div>
         </div>
 
-
-        <!-- HEADER -->
         <header class="header">
             <h2 id="page-title">Customer KYC Update</h2>
             <p id="page-desc">Please fill in the details below to continue your verification process.</p>
         </header>
 
-        <!-- SECTION 1: KYC FORM -->
         <section id="section-kyc" class="form-card animate">
             <h3 class="section-heading">Personal Information</h3>
 
             <form class="grid-form" id="kyc-form">
 
-                <!-- FIRST NAME -->
                 <div class="field">
                     <label>First Name</label>
                     <input id="firstName" type="text" placeholder="Enter first name">
                 </div>
 
-                <!-- MIDDLE NAME -->
                 <div class="field">
                     <label>Middle Name</label>
                     <input id="middleName" type="text" placeholder="Enter middle name">
                 </div>
 
-                <!-- LAST NAME -->
                 <div class="field">
                     <label>Last Name</label>
                     <input id="lastName" type="text" placeholder="Enter last name">
                 </div>
 
-                <!-- FATHER'S NAME -->
                 <div class="field full1">
                     <label>Father's Name</label>
                     <input id="fatherName" type="text" placeholder="Enter father's name">
                 </div>
 
-                <!-- DOB -->
                 <div class="field">
                     <label>Date of Birth</label>
                     <input id="dob" type="date">
                 </div>
 
-                <!-- AGE -->
                 <div class="field">
                     <label>Age</label>
                     <input id="age" type="number" min="0" placeholder="Age" readonly>
                 </div>
 
-                <!-- GENDER -->
                 <div class="field full">
                     <label>Gender</label>
                     <select id="gender">
@@ -95,24 +81,20 @@
                     </select>
                 </div>
 
-                <!-- MOBILE -->
                 <div class="field">
                     <label>Mobile Number</label>
                     <input id="mobile" type="text" placeholder="+91">
                 </div>
 
-                <!-- EMAIL -->
                 <div class="field">
                     <label>Email Address</label>
                     <input id="email" type="email" placeholder="example@domain.com">
                 </div>
 
-                <!-- ADDRESS -->
                 <div class="field full">
                     <label>Residential Address</label>
                     <textarea id="address" placeholder="Enter your address"></textarea>
                 </div>
-
 
                 <button type="button" class="submit-btn" onclick="nextStep('docs')">
                     Save & Continue
@@ -121,11 +103,9 @@
             </form>
         </section>
 
-        <!-- SECTION 2: DOCUMENT UPLOAD -->
         <section id="section-docs" class="form-card animate" style="display:none;">
             <h3 class="section-heading">Document Upload</h3>
 
-            <!-- ADDRESS PROOF -->
             <div class="upload-block">
 
                 <div class="field">
@@ -157,7 +137,6 @@
 
             <hr class="divider">
 
-            <!-- IDENTITY PROOF -->
             <div class="upload-block">
 
                 <div class="field">
@@ -189,7 +168,6 @@
 
             <hr class="divider">
 
-            <!-- PASSPORT SIZE PHOTO + LIVE CAMERA MATCH -->
             <div class="upload-block">
 
                 <div class="upload-row">
@@ -221,11 +199,9 @@
             <button type="button" class="submit-btn" onclick="nextStep('verify')">Continue</button>
         </section>
 
-        <!-- SECTION 3: VERIFICATION -->
         <section id="section-verify" class="form-card animate" style="display:none;">
             <h3 class="section-heading">Identity Verification</h3>
 
-            <!-- SIGNATURE UPLOAD -->
             <div class="upload-block">
                 <h4>Upload Your Signature</h4>
 
@@ -246,7 +222,6 @@
 
             <hr class="divider">
 
-            <!-- OTP VERIFICATION -->
             <div class="upload-block">
                 <h4>Choose OTP Verification Method</h4>
 
@@ -259,13 +234,11 @@
                     </select>
                 </div>
 
-                <!-- MOBILE INPUT -->
                 <div class="field full" id="mobileInput" style="display:none;">
                     <label>Enter Mobile Number</label>
                     <input id="otpMobile" type="text" placeholder="+91">
                 </div>
 
-                <!-- EMAIL INPUT -->
                 <div class="field full" id="emailInput" style="display:none;">
                     <label>Enter Email Address</label>
                     <input id="otpEmail" type="email" placeholder="example@domain.com">
@@ -275,13 +248,11 @@
                     Send OTP
                 </button>
 
-                <!-- OTP BOX -->
                 <div class="field full" id="otpBox" style="display:none; margin-top:15px;">
                     <label>Enter OTP</label>
                     <input id="otpValue" type="text" placeholder="Enter OTP">
                 </div>
 
-                <!-- CAPTCHA TEXT CHECK -->
                 <div class="field full" id="captchaBox" style="display:none; margin-top:15px;">
                     <label>Type the text shown below:</label>
                     <div style="padding:12px; background:#eef3ff; border-radius:8px; width:160px; text-align:center; font-weight:700; margin-bottom:10px;"
@@ -297,12 +268,9 @@
             </button>
         </section>
 
-
-        <!-- SECTION 4: STATUS -->
         <section id="section-status" class="form-card animate" style="display:none;">
             <h3 class="section-heading">Final Review Before Submission</h3>
 
-            <!-- PERSONAL DETAILS -->
             <div class="upload-block">
                 <h4>Personal Information</h4>
 
@@ -327,7 +295,6 @@
 
             <hr class="divider">
 
-            <!-- DOCUMENT PREVIEW -->
             <div class="upload-block">
                 <h4>Uploaded Documents</h4>
 
@@ -353,7 +320,6 @@
 
             <hr class="divider">
 
-            <!-- SIGNATURE -->
             <div class="upload-block">
                 <h4>Signature</h4>
                 <img id="rev-sign" class="preview-img" style="max-width:260px;">
@@ -361,7 +327,6 @@
 
             <button class="submit-btn" onclick="finishKYC()">Submit KYC</button>
         </section>
-
 
     </main>
 
